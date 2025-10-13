@@ -3,6 +3,8 @@ import cors from "cors";
 import express from "express";
 
 import { logger } from "./logger.js";
+import authenticationRoutes from "./src/identities-access-management/routes/authentication-routes.js";
+import { AVAILABLE_SOURCES } from "./src/shared/constants.js";
 import health from "./src/shared/health/routes.js";
 
 const server = express();
@@ -18,8 +20,23 @@ server.use((req, res, next) => {
   next();
 });
 
-// Define routes here
+// route to check api functionment
 server.use(health);
+
+// set source from request
+server.use((req, res, next) => {
+  // Check if req.headers.from is in the available sources
+  if (req.headers.from && Object.values(AVAILABLE_SOURCES).includes(req.headers.from)) {
+    req.source = req.headers.from;
+    next();
+  } else {
+    return res.status(400).json({ error: "Invalid or missing 'from' header" });
+  }
+});
+
+// Define routes here
+server.use(authenticationRoutes);
+
 // Catch error here
 server.use(errors);
 

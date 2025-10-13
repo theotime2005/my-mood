@@ -4,4 +4,9 @@ const USER_TYPE = {
   EMPLOYER: "employer",
 };
 
-export { USER_TYPE };
+const AVAILABLE_SOURCES = {
+  MANAGEMENT: "management",
+  MYMOOD: "mymood",
+};
+
+export { AVAILABLE_SOURCES, USER_TYPE };
