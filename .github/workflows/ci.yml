@@ -1,0 +1,66 @@
+name: ci
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - ready_for_review
+      - synchronize
+  push:
+    branches:
+      - main
+
+jobs:
+  api-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 'latest'
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./api
+
+      - name: Run lint
+        run: npm run lint
+        working-directory: ./api
+
+  api-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: setup node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 'latest'
+
+      - name: setup docker
+        uses: docker/setup-buildx-action@v3
+
+      - name: configure project
+        run: |
+          npm ci
+          cp sample.env .env
+        working-directory: ./api
+
+      - name: start docker
+        run: docker compose up -d
+
+      - name: wait for db
+        run: sleep 5
+        working-directory: ./api
+
+      - name: run tests
+        run: npm run test
+        working-directory: ./api
