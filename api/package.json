@@ -1,0 +1,57 @@
+{
+  "name": "api",
+  "version": "0.0.0",
+  "description": "The api of My Mood platform",
+  "homepage": "https://github.com/theotime2005/my-mood#readme",
+  "bugs": {
+    "url": "https://github.com/theotime2005/my-mood/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theotime2005/my-mood.git"
+  },
+  "license": "ISC",
+  "author": "theotime2005",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test:prepare && NODE_ENV=test vitest run",
+    "test:coverage": "npm t -- --coverage",
+    "test:prepare": "NODE_ENV=test npm run db:prepare",
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "db:new-migration": "npx knex --knexfile ./db/knexfile.js  migrate:make --stub $PWD/db/template.js $migrationname",
+    "db:create": "node ./db/create-database.js",
+    "db:delete": "node ./db/drop-database.js",
+    "db:empty": "node ./db/empty-database.js",
+    "db:migrate": "knex --knexfile ./db/knexfile.js  migrate:latest",
+    "db:rollback:latest": "knex --knexfile ./db/knexfile.js  migrate:down",
+    "db:prepare": "npm run db:delete && npm run db:create && npm run db:migrate",
+    "db:seed": "knex --knexfile ./db/knexfile.js seed:run",
+    "db:reset": "npm run db:prepare && npm run db:seed",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "celebrate": "^15.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^3.1.0",
+    "lodash": "^4.17.21",
+    "nodemailer": "^7.0.9",
+    "pg": "^8.16.3",
+    "pino": "^10.0.0",
+    "pino-pretty": "^13.1.2",
+    "vitest": "^3.2.4"
+  },
+  "devDependencies": {
+    "@eslint/json": "^0.13.2",
+    "eslint-plugin-jsdoc": "^61.1.1",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-vitest-globals": "^1.5.0",
+    "supertest": "^7.1.4"
+  }
+}
