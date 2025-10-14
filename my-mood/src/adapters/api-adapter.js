@@ -1,13 +1,28 @@
+const SOURCE = "mymood";
+
 /**
- * Vérifie la santé de l'API
- * @param {string} baseUrl - URL de base de l'API
- * @returns {Promise<boolean>} - true si l'API est accessible, false sinon
+ * Creates headers with the source origin
+ * @param {Object} additionalHeaders - Additional headers to include
+ * @returns {Object} Headers object with source and any additional headers
+ */
+function createHeaders(additionalHeaders = {}) {
+  return {
+    from: SOURCE,
+    ...additionalHeaders,
+  };
+}
+
+/**
+ * Checks the health of the API
+ * @param {string} baseUrl - Base URL of the API
+ * @returns {Promise<boolean>} - true if the API is accessible, false otherwise
  */
 async function checkHealth(baseUrl) {
   try {
     const url = `${baseUrl}/api/health`;
     const response = await fetch(url, {
       method: "GET",
+      headers: createHeaders(),
     });
 
     return response.ok;
@@ -17,10 +32,10 @@ async function checkHealth(baseUrl) {
 }
 
 /**
- * Authentifie un utilisateur
- * @param {string} baseUrl - URL de base de l'API
- * @param {string} email - Email de l'utilisateur
- * @param {string} password - Mot de passe de l'utilisateur
+ * Authenticates a user
+ * @param {string} baseUrl - Base URL of the API
+ * @param {string} email - User's email
+ * @param {string} password - User's password
  * @returns {Promise<{success: boolean, token?: string, message?: string}>}
  */
 async function login({ baseUrl, email, password }) {
@@ -28,9 +43,9 @@ async function login({ baseUrl, email, password }) {
     const url = `${baseUrl}/api/authentication/login`;
     const response = await fetch(url, {
       method: "POST",
-      headers: {
+      headers: createHeaders({
         "Content-Type": "application/json",
-      },
+      }),
       body: JSON.stringify({ email, password }),
     });
 
@@ -46,4 +61,4 @@ async function login({ baseUrl, email, password }) {
   }
 }
 
-export { checkHealth, login };
+export { checkHealth, createHeaders, login };

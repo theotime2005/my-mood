@@ -4,15 +4,15 @@ const BASE_URL_KEY = "my_mood_base_url";
 const TOKEN_KEY = "my_mood_token";
 
 /**
- * Sauvegarde l'URL de base de l'API
- * @param {string} url - URL de base
+ * Saves the base URL of the API
+ * @param {string} url - Base URL
  */
 async function saveBaseUrl(url) {
   await SecureStore.setItemAsync(BASE_URL_KEY, url);
 }
 
 /**
- * Récupère l'URL de base de l'API
+ * Retrieves the base URL of the API
  * @returns {Promise<string|null>}
  */
 async function getBaseUrl() {
@@ -20,15 +20,15 @@ async function getBaseUrl() {
 }
 
 /**
- * Sauvegarde le token d'authentification
- * @param {string} token - Token d'authentification
+ * Saves the authentication token
+ * @param {string} token - Authentication token
  */
 async function saveToken(token) {
   await SecureStore.setItemAsync(TOKEN_KEY, token);
 }
 
 /**
- * Récupère le token d'authentification
+ * Retrieves the authentication token
  * @returns {Promise<string|null>}
  */
 async function getToken() {
@@ -36,7 +36,7 @@ async function getToken() {
 }
 
 /**
- * Supprime le token d'authentification
+ * Deletes the authentication token
  */
 async function deleteToken() {
   await SecureStore.deleteItemAsync(TOKEN_KEY);

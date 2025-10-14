@@ -1,10 +1,31 @@
-import { checkHealth, login } from "../../src/adapters/api-adapter.js";
+import { checkHealth, createHeaders, login } from "../../src/adapters/api-adapter.js";
 
 global.fetch = jest.fn();
 
 describe("Unit | API Adapter", () => {
   beforeEach(() => {
     fetch.mockClear();
+  });
+
+  describe("createHeaders", () => {
+    it("should create headers with from source", () => {
+      // when
+      const headers = createHeaders();
+
+      // then
+      expect(headers).toEqual({ from: "mymood" });
+    });
+
+    it("should merge additional headers with from source", () => {
+      // when
+      const headers = createHeaders({ "Content-Type": "application/json" });
+
+      // then
+      expect(headers).toEqual({
+        from: "mymood",
+        "Content-Type": "application/json",
+      });
+    });
   });
 
   describe("checkHealth", () => {
@@ -17,7 +38,10 @@ describe("Unit | API Adapter", () => {
 
       // then
       expect(result).toBe(true);
-      expect(fetch).toHaveBeenCalledWith("https://example.com/api/health", { method: "GET" });
+      expect(fetch).toHaveBeenCalledWith("https://example.com/api/health", {
+        method: "GET",
+        headers: { from: "mymood" },
+      });
     });
 
     it("should return false when API is not healthy", async () => {
@@ -61,7 +85,10 @@ describe("Unit | API Adapter", () => {
         "https://example.com/api/authentication/login",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            from: "mymood",
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({ email: "user@example.com", password: "password123" }),
         },
       );
