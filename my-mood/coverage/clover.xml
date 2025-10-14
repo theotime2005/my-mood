@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1760447269918" clover="3.2.0">
+  <project timestamp="1760447269918" name="All files">
+    <metrics statements="66" coveredstatements="38" conditionals="26" coveredconditionals="9" methods="15" coveredmethods="8" elements="107" coveredelements="55" complexity="0" loc="66" ncloc="66" packages="4" files="6" classes="6"/>
+    <package name="my-mood">
+      <metrics statements="14" coveredstatements="12" conditionals="6" coveredconditionals="4" methods="3" coveredmethods="3"/>
+      <file name="App.js" path="/home/runner/work/my-mood/my-mood/my-mood/App.js">
+        <metrics statements="14" coveredstatements="12" conditionals="6" coveredconditionals="4" methods="3" coveredmethods="3"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="20" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="22" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="32" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="36" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="my-mood.src.adapters">
+      <metrics statements="13" coveredstatements="13" conditionals="4" coveredconditionals="3" methods="2" coveredmethods="2"/>
+      <file name="api-adapter.js" path="/home/runner/work/my-mood/my-mood/my-mood/src/adapters/api-adapter.js">
+        <metrics statements="13" coveredstatements="13" conditionals="4" coveredconditionals="3" methods="2" coveredmethods="2"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="27" count="3" type="stmt"/>
+        <line num="28" count="3" type="stmt"/>
+        <line num="29" count="3" type="stmt"/>
+        <line num="37" count="2" type="stmt"/>
+        <line num="39" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="42" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="45" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="my-mood.src.screens">
+      <metrics statements="32" coveredstatements="11" conditionals="16" coveredconditionals="2" methods="5" coveredmethods="3"/>
+      <file name="HomeScreen.js" path="/home/runner/work/my-mood/my-mood/my-mood/src/screens/HomeScreen.js">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+      </file>
+      <file name="LoginScreen.js" path="/home/runner/work/my-mood/my-mood/my-mood/src/screens/LoginScreen.js">
+        <metrics statements="16" coveredstatements="5" conditionals="10" coveredconditionals="1" methods="2" coveredmethods="1"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="13" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="22" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="26" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="63" count="2" type="stmt"/>
+      </file>
+      <file name="WelcomeScreen.js" path="/home/runner/work/my-mood/my-mood/my-mood/src/screens/WelcomeScreen.js">
+        <metrics statements="14" coveredstatements="4" conditionals="6" coveredconditionals="1" methods="2" coveredmethods="1"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="12" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="54" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="my-mood.src.utils">
+      <metrics statements="7" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="0"/>
+      <file name="storage.js" path="/home/runner/work/my-mood/my-mood/my-mood/src/utils/storage.js">
+        <metrics statements="7" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="0"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="4" count="3" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
