@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import databaseBuilder from "../../../../db/database-builder/index.js";
 import { knex } from "../../../../db/knex-database-connection.js";
 import * as userRepository from "../../../../src/identities-access-management/repositories/users-repository.js";
+import { USER_TYPE } from "../../../../src/shared/constants.js";
 
 describe("Integration | Identities Access Management | Repositories | User repository", () => {
   describe("#findUserByEmail", () => {
@@ -51,6 +52,47 @@ describe("Integration | Identities Access Management | Repositories | User repos
 
       // then
       expect(result).toEqual(0);
+    });
+  });
+
+  describe("#updateUserTypeByUserId", () => {
+    it("should update the user type successfully", async () => {
+      // given
+      const createdUser = await databaseBuilder.factory.buildUser({ userType: USER_TYPE.MANAGER });
+
+      // when
+      const result = await userRepository.updateUserTypeByUserId({ userId: createdUser.id, userType: USER_TYPE.EMPLOYER });
+
+      // then
+      expect(result).toEqual(1);
+      const updatedUser = await knex("users").where({ id: createdUser.id }).first();
+      expect(updatedUser.userType).toBe(USER_TYPE.EMPLOYER);
+    });
+  });
+
+  describe("#findUserByUserId", () => {
+    it("should return user information", async () => {
+      // given
+      const createdUser = await databaseBuilder.factory.buildUser();
+
+      // when
+      const result = await userRepository.findUserByUserId(createdUser.id);
+
+      // then
+      expect(result).toBeDefined();
+      expect(result.id).toBe(createdUser.id);
+      expect(result.email).toBe(createdUser.email);
+    });
+
+    it("should return null if user not found", async () => {
+      // given
+      const nonExistentUserId = 9999;
+
+      // when
+      const result = await userRepository.findUserByUserId(nonExistentUserId);
+
+      // then
+      expect(result).toBeNull();
     });
   });
 });
