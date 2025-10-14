@@ -13,15 +13,27 @@ jest.mock("@react-navigation/native", () => {
 });
 
 describe("Unit | App", () => {
-  it("should render without crashing", async () => {
+  it("should render loading indicator initially", () => {
     // given
     storage.getBaseUrl.mockResolvedValue(null);
     storage.getToken.mockResolvedValue(null);
 
     // when
-    const component = render(<App/>);
+    const { getByTestId } = render(<App/>);
 
     // then
-    expect(component).toBeTruthy();
+    expect(getByTestId("loading-indicator")).toBeTruthy();
+  });
+
+  it("should handle storage errors gracefully", async () => {
+    // given
+    storage.getBaseUrl.mockRejectedValue(new Error("Storage error"));
+    storage.getToken.mockRejectedValue(new Error("Storage error"));
+
+    // when - the app should not crash
+    const { getByTestId } = render(<App/>);
+
+    // then
+    expect(getByTestId("loading-indicator")).toBeTruthy();
   });
 });
