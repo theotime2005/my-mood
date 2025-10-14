@@ -56,8 +56,15 @@ export default function LoginScreen({ navigation }) {
         onPress={handleLogin}
         disabled={loading}
       />
-      <Text>Mauvaise URL ?</Text>
-      <Button title={"Changer d'url"} onPress={() => navigation.navigate("Welcome")} />
+
+      <View style={styles.urlChangeContainer}>
+        <Text style={styles.urlChangeText}>Mauvaise URL ?</Text>
+        <Button
+          title="Changer d'URL"
+          onPress={() => navigation.navigate("Welcome")}
+          color="#007AFF"
+        />
+      </View>
     </View>
   );
 }
@@ -82,5 +89,14 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     fontSize: 16,
+  },
+  urlChangeContainer: {
+    marginTop: 30,
+    alignItems: "center",
+  },
+  urlChangeText: {
+    fontSize: 14,
+    color: "#666",
+    marginBottom: 10,
   },
 });

@@ -1,12 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
 
 import { checkHealth } from "../adapters/api-adapter.js";
-import { saveBaseUrl } from "../utils/storage.js";
+import { getBaseUrl, saveBaseUrl } from "../utils/storage.js";
 
 export default function WelcomeScreen({ navigation }) {
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(function() {
+    async function loadStoredUrl() {
+      const storedUrl = await getBaseUrl();
+      if (storedUrl) {
+        setUrl(storedUrl);
+      }
+    }
+
+    loadStoredUrl();
+  }, []);
 
   async function handleContinue() {
     if (!url.trim()) {
