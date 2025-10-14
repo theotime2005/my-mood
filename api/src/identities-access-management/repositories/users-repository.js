@@ -9,4 +9,12 @@ async function updateLastLoggedAtByUserId(userId) {
   return await knex(TABLE_NAME).where({ id: userId }).update({ lastLoggedAt: knex.fn.now(), updated_at: knex.fn.now() });
 }
 
-export { findUserByEmail, updateLastLoggedAtByUserId };
+async function updateUserTypeByUserId({ userId, userType }) {
+  return await knex(TABLE_NAME).where({ id: userId }).update({ userType, updated_at: knex.fn.now() });
+}
+
+async function findUserByUserId(userId) {
+  return await knex(TABLE_NAME).where({ id: userId }).first() || null;
+}
+
+export { findUserByEmail, findUserByUserId, updateLastLoggedAtByUserId, updateUserTypeByUserId };
