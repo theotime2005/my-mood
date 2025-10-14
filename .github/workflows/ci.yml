@@ -64,3 +64,43 @@ jobs:
       - name: run tests
         run: npm run test
         working-directory: ./api
+
+  my-mood-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 'latest'
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./my-mood
+
+      - name: Run lint
+        run: npm run lint
+        working-directory: ./my-mood
+
+  my-mood-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: setup node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 'latest'
+
+      - name: configure project
+        run: |
+          npm ci
+        working-directory: ./my-mood
+
+      - name: run tests
+        run: npm run test
+        working-directory: ./my-mood
