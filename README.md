@@ -55,3 +55,66 @@ The resources are free, and you can fork and adapt the project for your personal
 - **compose.yml**: Docker Compose configuration for local development (database, etc).
 
 - **package.json**: Project-level dependencies and scripts.
+
+---
+
+## Versioning and Releases
+
+This project uses [Semantic Versioning](https://semver.org/) (semver) and [Conventional Commits](https://www.conventionalcommits.org/) for version management.
+
+### Local Version Bumping
+
+You can bump versions locally using npm scripts:
+
+```sh
+# Automatically determine version bump based on commit messages
+npm run release
+
+# Explicitly bump patch version (0.0.x)
+npm run release:patch
+
+# Explicitly bump minor version (0.x.0)
+npm run release:minor
+
+# Explicitly bump major version (x.0.0)
+npm run release:major
+```
+
+These commands will:
+- Update version in all `package.json` files (root, api, admin, my-mood)
+- Generate/update `CHANGELOG.md`
+- Create a git commit and tag
+
+### Creating a Release via GitHub Actions
+
+To create and publish a release:
+
+1. Go to the **Actions** tab in GitHub
+2. Select the **release** workflow
+3. Click **Run workflow**
+4. Choose the release type (patch, minor, or major)
+5. Click **Run workflow**
+
+The workflow will automatically:
+- Bump versions in all package.json files
+- Generate/update the changelog
+- Create a git tag
+- Push changes to the main branch
+- Create a GitHub Release
+
+### Commit Message Format
+
+Follow the [Conventional Commits](https://www.conventionalcommits.org/) format:
+
+- `feat:` - New features (minor version bump)
+- `fix:` - Bug fixes (patch version bump)
+- `tech:` - Technical changes (appears in changelog)
+- `docs:` - Documentation changes (appears in changelog)
+- `refactor:` - Code refactoring (appears in changelog)
+- `perf:` - Performance improvements (appears in changelog)
+- `chore:` - Maintenance tasks (hidden from changelog)
+- `style:` - Code style changes (hidden from changelog)
+- `test:` - Test changes (hidden from changelog)
+- `ci:` - CI/CD changes (hidden from changelog)
+
+Breaking changes should include `BREAKING CHANGE:` in the commit body (triggers major version bump).
