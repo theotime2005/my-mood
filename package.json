@@ -27,7 +27,7 @@
     "test:my-mood": "cd my-mood && npm test",
     "test": "npm-run-all --parallel --print-label test:*",
     "configure": "sh scripts/configure.sh",
-    "update-subpackages": "node scripts/update-versions.js",
+    "update-subpackages": "sh scripts/update-versions.sh",
     "release": "semantic-release"
   },
   "dependencies": {
