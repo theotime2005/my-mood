@@ -1,15 +1,17 @@
-<script setup></script>
+<script setup>
+import { onMounted, ref } from "vue";
+
+import { checkApiIsOk } from "@/adapters/api-adapter.js";
+
+const apiIsActive = ref(false);
+
+onMounted(async () => {
+  apiIsActive.value = await checkApiIsOk();
+});
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a
-      href="https://vuejs.org/"
-      target="_blank"
-      rel="noopener"
-    >vuejs.org</a> to read the
-    documentation
-  </p>
+  <div v-if="apiIsActive">
+    <RouterView />
+  </div>
 </template>
-
-<style scoped></style>
