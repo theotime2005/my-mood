@@ -55,3 +55,9 @@ The resources are free, and you can fork and adapt the project for your personal
 - **compose.yml**: Docker Compose configuration for local development (database, etc).
 
 - **package.json**: Project-level dependencies and scripts.
+
+---
+
+## Version Management
+
+This project uses [semantic-release](https://github.com/semantic-release/semantic-release) for automated version management. See [VERSIONING.md](./VERSIONING.md) for more information on how to create releases and the versioning strategy.
