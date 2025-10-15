@@ -1,0 +1,80 @@
+{
+  "types": [
+    {
+      "type": "feat",
+      "section": "Features"
+    },
+    {
+      "type": "fix",
+      "section": "Bug Fixes"
+    },
+    {
+      "type": "chore",
+      "hidden": true
+    },
+    {
+      "type": "docs",
+      "section": "Documentation"
+    },
+    {
+      "type": "style",
+      "hidden": true
+    },
+    {
+      "type": "refactor",
+      "section": "Code Refactoring"
+    },
+    {
+      "type": "perf",
+      "section": "Performance Improvements"
+    },
+    {
+      "type": "test",
+      "hidden": true
+    },
+    {
+      "type": "tech",
+      "section": "Technical"
+    },
+    {
+      "type": "ci",
+      "hidden": true
+    }
+  ],
+  "bumpFiles": [
+    {
+      "filename": "package.json",
+      "type": "json"
+    },
+    {
+      "filename": "api/package.json",
+      "type": "json"
+    },
+    {
+      "filename": "admin/package.json",
+      "type": "json"
+    },
+    {
+      "filename": "my-mood/package.json",
+      "type": "json"
+    }
+  ],
+  "packageFiles": [
+    {
+      "filename": "package.json",
+      "type": "json"
+    },
+    {
+      "filename": "api/package.json",
+      "type": "json"
+    },
+    {
+      "filename": "admin/package.json",
+      "type": "json"
+    },
+    {
+      "filename": "my-mood/package.json",
+      "type": "json"
+    }
+  ]
+}
