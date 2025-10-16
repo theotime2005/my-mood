@@ -33,10 +33,19 @@ async function users(databaseBuilder) {
     shouldChangePassword: true,
   };
 
+  const admin = {
+    firstname: "user",
+    lastname: "admin",
+    email: "user.admin@example.net",
+    hashedPassword: password,
+    userType: USER_TYPE.ADMIN,
+  };
+
   // call database builder with data
   await databaseBuilder.factory.buildUser(employer);
   await databaseBuilder.factory.buildUser(manager);
   await databaseBuilder.factory.buildUser(employerMustChangePassword);
+  await databaseBuilder.factory.buildUser(admin);
 }
 
 export { users };
