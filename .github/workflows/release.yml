@@ -27,7 +27,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: 'latest'
+          node-version-file: .nvmrc
 
       - name: Install dependencies
         run: npm ci
