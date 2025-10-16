@@ -13,17 +13,17 @@ The versioning is based on commit messages following the [Conventional Commits](
 
 ## Commit Types
 
-The following commit types are configured in `.versionrc.json`:
+The following commit types are configured in `.releaserc.json`:
 
-- `feat`: New features
-- `fix`: Bug fixes
-- `docs`: Documentation changes
-- `refactor`: Code refactoring
-- `perf`: Performance improvements
-- `tech`: Technical changes
-- `chore`: Maintenance tasks (hidden in changelog)
-- `style`: Code style changes (hidden in changelog)
-- `test`: Test changes (hidden in changelog)
+- `feat`: New features (triggers minor version bump)
+- `fix`: Bug fixes (triggers patch version bump)
+- `docs`: Documentation changes (triggers patch version bump)
+- `refactor`: Code refactoring (triggers patch version bump)
+- `perf`: Performance improvements (triggers patch version bump)
+- `tech`: Technical changes (triggers patch version bump)
+- `chore`: Maintenance tasks (hidden in changelog, no version bump)
+- `style`: Code style changes (hidden in changelog, no version bump)
+- `test`: Test changes (hidden in changelog, no version bump)
 
 ## Creating a Release
 
@@ -53,8 +53,8 @@ npm run release -- --dry-run
 
 ## Configuration Files
 
-- `.releaserc.json`: Main semantic-release configuration
-- `.versionrc.json`: Custom commit type definitions for changelog generation
+- `.releaserc.json`: Main semantic-release configuration with custom commit type definitions
+- `.versionrc.json`: Legacy configuration file (kept for reference, types are now configured in `.releaserc.json`)
 - `.github/workflows/release.yml`: GitHub Actions workflow for manual releases
 
 ## Version Synchronization

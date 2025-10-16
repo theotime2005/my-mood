@@ -1,4 +1,5 @@
 {
+  "_comment": "This file is kept for reference only. The actual configuration is now in .releaserc.json",
   "types": [
     {
       "type": "feat",
