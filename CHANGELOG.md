@@ -1,3 +1,13 @@
+## [1.0.1](https://github.com/theotime2005/my-mood/compare/v1.0.0...v1.0.1) (2025-10-16)
+
+### Bug Fixes
+
+* configure semantic-release to recognize custom commit types from .versionrc.json ([#17](https://github.com/theotime2005/my-mood/issues/17)) ([cda3b07](https://github.com/theotime2005/my-mood/commit/cda3b07981848e3566f9e48aa5548710c3d70f72))
+
+### Technical
+
+* use npm with script for semantic version ([#13](https://github.com/theotime2005/my-mood/issues/13)) ([fdf57f3](https://github.com/theotime2005/my-mood/commit/fdf57f332c8249cd2bbecbc324b052a0b59ee23b))
+
 # 1.0.0 (2025-10-16)
 
 
