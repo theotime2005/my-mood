@@ -17,4 +17,8 @@ async function findUserByUserId(userId) {
   return await knex(TABLE_NAME).where({ id: userId }).first() || null;
 }
 
-export { findUserByEmail, findUserByUserId, updateLastLoggedAtByUserId, updateUserTypeByUserId };
+async function getAllUsers() {
+  return await knex(TABLE_NAME).select("*");
+}
+
+export { findUserByEmail, findUserByUserId, getAllUsers, updateLastLoggedAtByUserId, updateUserTypeByUserId };
