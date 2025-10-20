@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 
-import { checkApiIsOk, loginUser } from "@/adapters/api-adapter.js";
+import { checkApiIsOk, getAllUsers, loginUser, updateUserType } from "@/adapters/api-adapter.js";
 import { ERRORS } from "@/constants.js";
 
 describe("Unit | Adapters | API check", () => {
@@ -108,6 +108,72 @@ describe("Unit | Adapters | API check", () => {
       // then
       expect(result).toBe(false);
       expect(global.fetch).toHaveBeenCalledWith("/api/health");
+    });
+  });
+
+  describe("getAllUsers", () => {
+    it("returns data array when status is 200", async () => {
+      const data = [{ id: 1, name: "A" }];
+      global.fetch.mockResolvedValueOnce({ status: 200, json: async () => ({ data }) });
+      const res = await getAllUsers("token");
+      expect(res).toEqual(data);
+      expect(global.fetch).toHaveBeenCalledWith("/api/users", expect.objectContaining({ method: "GET" }));
+    });
+
+    it("returns null when status is not 200", async () => {
+      global.fetch.mockResolvedValueOnce({ status: 404 });
+      const res = await getAllUsers("token");
+      expect(res).toBeNull();
+    });
+
+    it("returns null when fetch throws", async () => {
+      global.fetch.mockRejectedValueOnce(new Error("network"));
+      const res = await getAllUsers("token");
+      expect(res).toBeNull();
+    });
+  });
+
+  describe("#updateUserType", () => {
+    it("returns true when request is successful (status 200)", async () => {
+      // given
+      vi.spyOn(global, "fetch").mockResolvedValueOnce({ status: 200 });
+
+      // when
+      const res = await updateUserType({ userId: 1, token: "token", userType: "admin" });
+
+      // then
+      expect(res).toBe(true);
+      expect(global.fetch).toHaveBeenCalledWith("/api/users/1/user-type", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          from: "management",
+          Authorization: "Bearer token",
+        },
+        body: JSON.stringify({ userType: "admin" }),
+      });
+    });
+
+    it("returns false when request status is not 200", async () => {
+      // given
+      global.fetch.mockResolvedValueOnce({ status: 400 });
+
+      // when
+      const res = await updateUserType({ userId: 2, token: "token", userType: "user" });
+
+      // then
+      expect(res).toBe(false);
+    });
+
+    it("returns false when fetch throws", async () => {
+      // given
+      global.fetch.mockRejectedValueOnce(new Error("network"));
+
+      // when
+      const res = await updateUserType({ userId: 3, token: "token", userType: "user" });
+
+      // then
+      expect(res).toBe(false);
     });
   });
 });

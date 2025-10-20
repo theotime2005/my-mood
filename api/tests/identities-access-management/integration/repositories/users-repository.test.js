@@ -95,4 +95,19 @@ describe("Integration | Identities Access Management | Repositories | User repos
       expect(result).toBeNull();
     });
   });
+
+  describe("#getAllUsers", () => {
+    it("should return all users", async () => {
+      // given
+      await databaseBuilder.factory.buildUser({ email: "user1@example.net" });
+      await databaseBuilder.factory.buildUser({ email: "user2@example.net" });
+
+      // when
+      const result = await userRepository.getAllUsers();
+
+      // then
+      expect(result).toBeDefined();
+      expect(result).toHaveLength(2);
+    });
+  });
 });

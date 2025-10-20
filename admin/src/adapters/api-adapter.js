@@ -55,4 +55,39 @@ async function loginUser({ email, password }) {
   }
 }
 
-export { checkApiIsOk, loginUser };
+async function getAllUsers(token) {
+  try {
+    const response = await fetch(`${BASE_URL}users`, {
+      method: "GET",
+      headers: getHeaders({ Authorization: `Bearer ${token}` }),
+    });
+    if (response.status === 200) {
+      const { data } = await response.json();
+      return data;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+async function updateUserType({ userId, token, userType }) {
+  try {
+    const request = await fetch(`${BASE_URL}users/${userId}/user-type`, {
+      method: "PUT",
+      headers: getHeaders({
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }),
+      body: JSON.stringify({ userType }),
+    });
+    if (request.status === 200) {
+      return true;
+    }
+    return false;
+  } catch {
+    return false;
+  }
+}
+
+export { checkApiIsOk, getAllUsers, loginUser, updateUserType };
