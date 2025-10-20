@@ -58,4 +58,35 @@ describe("Acceptance | Identities Access Management | Routes | Users Management 
       expect(response.body).toEqual({ message: "Forbidden" });
     });
   });
+
+  describe("#GET /api/users", () => {
+    it("should return 200 status code and user list", async () => {
+      // given
+      const adminUser = await databaseBuilder.factory.buildUser({
+        email: "admin@example.net",
+        userType: USER_TYPE.ADMIN,
+      });
+      const employer1 = await databaseBuilder.factory.buildUser({ email: "employer1@example.net" });
+      const manager1 = await databaseBuilder.factory.buildUser({
+        email: "manager1@example.net",
+        userType: USER_TYPE.MANAGER,
+      });
+
+      const token = encodedToken({ userId: adminUser.id });
+      const headers = { Authorization: `Bearer ${token}`, from: AVAILABLE_SOURCES.MANAGEMENT };
+
+      // when
+      const response = await request(server).get("/api/users").set(headers);
+
+      // then
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({
+        data: expect.arrayContaining([
+          expect.objectContaining({ id: employer1.id, email: employer1.email }),
+          expect.objectContaining({ id: manager1.id, email: manager1.email }),
+          expect.objectContaining({ id: adminUser.id, email: adminUser.email }),
+        ]),
+      });
+    });
+  });
 });
