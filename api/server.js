@@ -3,10 +3,9 @@ import cors from "cors";
 import express from "express";
 
 import { logger } from "./logger.js";
-import { checkUserAccess } from "./src/identities-access-management/middlewares/check-user-access.js";
-import { checkUserIsAdmin } from "./src/identities-access-management/middlewares/check-user-is-admin.js";
 import authenticationRoutes from "./src/identities-access-management/routes/authentication-routes.js";
 import usersManagementRoutes from "./src/identities-access-management/routes/users-management-routes.js";
+import moodRoutes from "./src/moods/routes.js";
 import { AVAILABLE_SOURCES } from "./src/shared/constants.js";
 import health from "./src/shared/health/routes.js";
 
@@ -39,7 +38,8 @@ server.use((req, res, next) => {
 
 // Define routes here
 server.use(authenticationRoutes);
-server.use(checkUserAccess, checkUserIsAdmin, usersManagementRoutes);
+server.use(usersManagementRoutes);
+server.use(moodRoutes);
 // Catch error here
 server.use(errors);
 
