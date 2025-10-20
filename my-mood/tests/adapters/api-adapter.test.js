@@ -1,4 +1,4 @@
-import { checkHealth, createHeaders, login } from "../../src/adapters/api-adapter.js";
+import { checkHealth, createHeaders, login, submitMood } from "../../src/adapters/api-adapter.js";
 
 global.fetch = jest.fn();
 
@@ -114,6 +114,71 @@ describe("Unit | API Adapter", () => {
 
       // when
       const result = await login({baseUrl: "https://example.com", email: "user@example.com", password: "password123"});
+
+      // then
+      expect(result).toEqual({ success: false, message: "Erreur de connexion au serveur" });
+    });
+  });
+
+  describe("submitMood", () => {
+    it("should return success when mood is submitted successfully", async () => {
+      // given
+      fetch.mockResolvedValue({ ok: true });
+
+      // when
+      const result = await submitMood({
+        baseUrl: "https://example.com",
+        token: "mock-token",
+        emotionalState: "happy",
+        motivation: 8,
+      });
+
+      // then
+      expect(result).toEqual({ success: true });
+      expect(fetch).toHaveBeenCalledWith(
+        "https://example.com/api/moods",
+        {
+          method: "POST",
+          headers: {
+            from: "mymood",
+            "Content-Type": "application/json",
+            "Authorization": "Bearer mock-token",
+          },
+          body: JSON.stringify({ emotionalState: "happy", motivation: 8 }),
+        },
+      );
+    });
+
+    it("should return error message when mood submission fails", async () => {
+      // given
+      fetch.mockResolvedValue({
+        ok: false,
+        json: async () => ({ message: "Validation error" }),
+      });
+
+      // when
+      const result = await submitMood({
+        baseUrl: "https://example.com",
+        token: "mock-token",
+        emotionalState: "sad",
+        motivation: 5,
+      });
+
+      // then
+      expect(result).toEqual({ success: false, message: "Validation error" });
+    });
+
+    it("should return error message when fetch fails", async () => {
+      // given
+      fetch.mockRejectedValue(new Error("Network error"));
+
+      // when
+      const result = await submitMood({
+        baseUrl: "https://example.com",
+        token: "mock-token",
+        emotionalState: "angry",
+        motivation: 3,
+      });
 
       // then
       expect(result).toEqual({ success: false, message: "Erreur de connexion au serveur" });

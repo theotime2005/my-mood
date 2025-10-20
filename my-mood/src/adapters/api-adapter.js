@@ -61,4 +61,35 @@ async function login({ baseUrl, email, password }) {
   }
 }
 
-export { checkHealth, createHeaders, login };
+/**
+ * Submits a mood entry to the API
+ * @param {string} baseUrl - Base URL of the API
+ * @param {string} token - Authentication token
+ * @param {string} emotionalState - Emotional state (happy, sad, angry, relaxed, excited)
+ * @param {number} motivation - Motivation level (1-10)
+ * @returns {Promise<{success: boolean, message?: string}>}
+ */
+async function submitMood({ baseUrl, token, emotionalState, motivation }) {
+  try {
+    const url = `${baseUrl}/api/moods`;
+    const response = await fetch(url, {
+      method: "POST",
+      headers: createHeaders({
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      }),
+      body: JSON.stringify({ emotionalState, motivation }),
+    });
+
+    if (response.ok) {
+      return { success: true };
+    } else {
+      const data = await response.json();
+      return { success: false, message: data.message || "Erreur lors de l'enregistrement" };
+    }
+  } catch (_error) {
+    return { success: false, message: "Erreur de connexion au serveur" };
+  }
+}
+
+export { checkHealth, createHeaders, login, submitMood };

@@ -5,6 +5,7 @@ import { ActivityIndicator, StyleSheet, View } from "react-native";
 
 import HomeScreen from "./src/screens/HomeScreen.js";
 import LoginScreen from "./src/screens/LoginScreen.js";
+import MoodEntryScreen from "./src/screens/MoodEntryScreen.js";
 import WelcomeScreen from "./src/screens/WelcomeScreen.js";
 import { getBaseUrl, getToken } from "./src/utils/storage.js";
 
@@ -52,6 +53,7 @@ export default function App() {
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="MoodEntry" component={MoodEntryScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
