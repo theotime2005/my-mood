@@ -1,4 +1,4 @@
-import { checkHealth, createHeaders, login } from "../../src/adapters/api-adapter.js";
+import { checkHealth, createHeaders, getUserInfo, login, saveMood } from "../../src/adapters/api-adapter.js";
 
 global.fetch = jest.fn();
 
@@ -114,6 +114,121 @@ describe("Unit | API Adapter", () => {
 
       // when
       const result = await login({baseUrl: "https://example.com", email: "user@example.com", password: "password123"});
+
+      // then
+      expect(result).toEqual({ success: false, message: "Erreur de connexion au serveur" });
+    });
+  });
+
+  describe("getUserInfo", () => {
+    it("should return user data when request is successful", async () => {
+      // given
+      const mockUserData = {
+        data: {
+          firstname: "John",
+          lastname: "Doe",
+          email: "john.doe@example.com",
+          userType: "employer",
+        },
+      };
+      fetch.mockResolvedValue({
+        ok: true,
+        json: async () => mockUserData,
+      });
+
+      // when
+      const result = await getUserInfo({ baseUrl: "https://example.com", token: "test-token" });
+
+      // then
+      expect(result).toEqual({ success: true, data: mockUserData.data });
+      expect(fetch).toHaveBeenCalledWith("https://example.com/api/user", {
+        method: "GET",
+        headers: {
+          from: "mymood",
+          Authorization: "Bearer test-token",
+        },
+      });
+    });
+
+    it("should return error message when request fails", async () => {
+      // given
+      fetch.mockResolvedValue({ ok: false });
+
+      // when
+      const result = await getUserInfo({ baseUrl: "https://example.com", token: "test-token" });
+
+      // then
+      expect(result).toEqual({ success: false, message: "Erreur lors de la récupération des informations" });
+    });
+
+    it("should return error message when fetch fails", async () => {
+      // given
+      fetch.mockRejectedValue(new Error("Network error"));
+
+      // when
+      const result = await getUserInfo({ baseUrl: "https://example.com", token: "test-token" });
+
+      // then
+      expect(result).toEqual({ success: false, message: "Erreur de connexion au serveur" });
+    });
+  });
+
+  describe("saveMood", () => {
+    it("should return success when mood is saved successfully", async () => {
+      // given
+      fetch.mockResolvedValue({ ok: true });
+
+      // when
+      const result = await saveMood({
+        baseUrl: "https://example.com",
+        token: "test-token",
+        emotionalState: "happy",
+        motivation: 8,
+      });
+
+      // then
+      expect(result).toEqual({ success: true });
+      expect(fetch).toHaveBeenCalledWith("https://example.com/api/moods", {
+        method: "POST",
+        headers: {
+          from: "mymood",
+          "Content-Type": "application/json",
+          Authorization: "Bearer test-token",
+        },
+        body: JSON.stringify({ emotionalState: "happy", motivation: 8 }),
+      });
+    });
+
+    it("should return error message when request fails with message", async () => {
+      // given
+      fetch.mockResolvedValue({
+        ok: false,
+        json: async () => ({ message: "Invalid emotional state" }),
+      });
+
+      // when
+      const result = await saveMood({
+        baseUrl: "https://example.com",
+        token: "test-token",
+        emotionalState: "invalid",
+        motivation: 8,
+      });
+
+      // then
+      expect(result).toEqual({ success: false, message: "Invalid emotional state" });
+    });
+
+    it("should return error message when fetch fails", async () => {
+      // given
+      fetch.mockRejectedValue(new Error("Network error"));
+
+      // when
+      const result = await saveMood({
+        baseUrl: "https://example.com",
+        token: "test-token",
+        emotionalState: "happy",
+        motivation: 8,
+      });
 
       // then
       expect(result).toEqual({ success: false, message: "Erreur de connexion au serveur" });
