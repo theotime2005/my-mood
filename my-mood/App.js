@@ -7,6 +7,7 @@ import { UserProvider } from "./src/contexts/UserContext.js";
 import HomeScreen from "./src/screens/HomeScreen.js";
 import LoginScreen from "./src/screens/LoginScreen.js";
 import MoodEntryScreen from "./src/screens/MoodEntryScreen.js";
+import MoodStatisticsScreen from "./src/screens/MoodStatisticsScreen.js";
 import WelcomeScreen from "./src/screens/WelcomeScreen.js";
 import { getBaseUrl, getToken } from "./src/utils/storage.js";
 
@@ -56,6 +57,7 @@ export default function App() {
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="MoodEntry" component={MoodEntryScreen} />
+          <Stack.Screen name="MoodStatistics" component={MoodStatisticsScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>

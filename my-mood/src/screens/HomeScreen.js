@@ -20,6 +20,7 @@ export default function HomeScreen({ navigation }) {
   }
 
   const canEnterMood = user && (user.userType === USER_TYPE.ADMIN || user.userType === USER_TYPE.EMPLOYER);
+  const canViewStatistics = user && user.userType === USER_TYPE.MANAGER;
 
   function handleLogoutPress() {
     Alert.alert(
@@ -53,6 +54,15 @@ export default function HomeScreen({ navigation }) {
             title="Saisir mon humeur"
             onPress={() => navigation.navigate("MoodEntry")}
             testID="mood-entry-button"
+          />
+        </View>
+      ) : canViewStatistics ? (
+        <View style={styles.buttonContainer}>
+          <Text style={styles.welcomeText}>Bienvenue {user.firstname} !</Text>
+          <Button
+            title="Voir les statistiques"
+            onPress={() => navigation.navigate("MoodStatistics")}
+            testID="mood-statistics-button"
           />
         </View>
       ) : (

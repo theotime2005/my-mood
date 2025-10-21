@@ -119,4 +119,31 @@ async function saveMood({ baseUrl, token, emotionalState, motivation }) {
   }
 }
 
-export { checkHealth, createHeaders, getUserInfo, login, saveMood };
+/**
+ * Gets mood statistics
+ * @param {string} baseUrl - Base URL of the API
+ * @param {string} token - Authentication token
+ * @returns {Promise<{success: boolean, data?: object, message?: string}>}
+ */
+async function getMoodStatistics({ baseUrl, token }) {
+  try {
+    const url = `${baseUrl}/api/moods`;
+    const response = await fetch(url, {
+      method: "GET",
+      headers: createHeaders({
+        Authorization: `Bearer ${token}`,
+      }),
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      return { success: true, data: result.data };
+    } else {
+      return { success: false, message: "Erreur lors de la récupération des statistiques" };
+    }
+  } catch (_error) {
+    return { success: false, message: "Erreur de connexion au serveur" };
+  }
+}
+
+export { checkHealth, createHeaders, getMoodStatistics, getUserInfo, login, saveMood };
