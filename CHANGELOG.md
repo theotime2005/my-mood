@@ -1,3 +1,13 @@
+## [1.2.0](https://github.com/theotime2005/my-mood/compare/v1.1.0...v1.2.0) (2025-10-21)
+
+### Features
+
+* Add mood statistics display for managers with mood entry and navigation ([#28](https://github.com/theotime2005/my-mood/issues/28)) ([a33c051](https://github.com/theotime2005/my-mood/commit/a33c051f0c835f85561ac78029b1ef1f5efbf720))
+
+### Bug Fixes
+
+* Fix the recuperation of user info when login succeeded ([#26](https://github.com/theotime2005/my-mood/issues/26)) ([5622e5b](https://github.com/theotime2005/my-mood/commit/5622e5b071a6d5cdb23e6aaf9890f9b9f15b0c14))
+
 ## [1.1.0](https://github.com/theotime2005/my-mood/compare/v1.0.1...v1.1.0) (2025-10-21)
 
 ### Features
