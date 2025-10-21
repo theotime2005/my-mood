@@ -14,7 +14,6 @@ vi.mock("vue-router", () => ({
   useRoute: vi.fn(() => ({ path: "/" })),
   useRouter: vi.fn(() => ({ push: vi.fn() })),
 }));
-// Do not mock vue-router here; we'll stub the router-view when mounting the component.
 
 describe("App", () => {
   it("renders RouterView when API is active", async () => {
