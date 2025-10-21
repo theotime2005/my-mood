@@ -1,3 +1,12 @@
+## [1.1.0](https://github.com/theotime2005/my-mood/compare/v1.0.1...v1.1.0) (2025-10-21)
+
+### Features
+
+* add logout functionality with user menu button ([#25](https://github.com/theotime2005/my-mood/issues/25)) ([f366016](https://github.com/theotime2005/my-mood/commit/f366016f07b75db575d23b23c4cf09bfa9911e58))
+* add mood entry feature with role-based access control ([#23](https://github.com/theotime2005/my-mood/issues/23)) ([ef73cf8](https://github.com/theotime2005/my-mood/commit/ef73cf8a050196a794df642dc4d282c5ab8e6e03))
+* **admin:** create an interface to manage users ([#21](https://github.com/theotime2005/my-mood/issues/21)) ([cb64804](https://github.com/theotime2005/my-mood/commit/cb6480492d8b3b7e859b6c89c663b986ae40f093))
+* **api:** create the mood gestion in api ([#18](https://github.com/theotime2005/my-mood/issues/18)) ([74bc4b7](https://github.com/theotime2005/my-mood/commit/74bc4b775ab47f335ef8b7432c761ce2206a225c))
+
 ## [1.0.1](https://github.com/theotime2005/my-mood/compare/v1.0.0...v1.0.1) (2025-10-16)
 
 ### Bug Fixes
