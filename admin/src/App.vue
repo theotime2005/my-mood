@@ -42,15 +42,11 @@ watch(
         }
       } else {
         isLogged.value = false;
-        if (userData && typeof userData === "object" && "value" in userData) {
-          userData.value = null;
-        }
+        userData.value = null;
       }
     } catch {
       isLogged.value = false;
-      if (userData && typeof userData === "object" && "value" in userData) {
-        userData.value = null;
-      }
+      userData.value = null;
     }
   },
   { immediate: true },
