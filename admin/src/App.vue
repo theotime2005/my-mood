@@ -55,8 +55,8 @@ watch(
 
 <template>
   <div v-if="apiIsActive">
-    <header v-if="isLogged">
-      <p>Connecté en tant que {{ userData.firstname }} {{ userData.lastname }}</p>
+    <header v-if="isLogged && userData">
+      <p>Connecté en tant que {{ userData?.firstname }} {{ userData?.lastname }}</p>
       <button @click="logout">
         Déconnexion
       </button>
