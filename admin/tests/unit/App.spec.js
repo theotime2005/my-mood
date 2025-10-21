@@ -1,18 +1,25 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it, vi } from "vitest";
 
-import { checkApiIsOk } from "@/adapters/api-adapter.js";
+import { checkApiIsOk, getUserInfo } from "@/adapters/api-adapter.js";
 import App from "@/App.vue";
 
 vi.mock("@/adapters/api-adapter.js", () => ({
   checkApiIsOk: vi.fn(),
+  getUserInfo: vi.fn(),
 }));
-// Do not mock vue-router here; we'll stub the router-view when mounting the component.
+
+// Mock vue-router to provide useRoute/useRouter used in the component setup
+vi.mock("vue-router", () => ({
+  useRoute: vi.fn(() => ({ path: "/" })),
+  useRouter: vi.fn(() => ({ push: vi.fn() })),
+}));
 
 describe("App", () => {
   it("renders RouterView when API is active", async () => {
     // given
     checkApiIsOk.mockResolvedValue(true);
+    getUserInfo.mockResolvedValue({ username: "testuser" });
     // when
     const wrapper = mount(App, {
       global: {
@@ -40,11 +47,5 @@ describe("App", () => {
     await new Promise(r => setTimeout(r));
     // then
     expect(wrapper.html()).not.toContain("RouterView content");
-  });
-});
-
-describe("Sanity check", () => {
-  it("should run this test", () => {
-    expect(1).toBe(1);
   });
 });

@@ -1,6 +1,12 @@
 import { describe, expect, it, vi } from "vitest";
 
-import { checkApiIsOk, getAllUsers, loginUser, updateUserType } from "@/adapters/api-adapter.js";
+import {
+  checkApiIsOk,
+  getAllUsers,
+  getUserInfo,
+  loginUser,
+  updateUserType,
+} from "@/adapters/api-adapter.js";
 import { ERRORS } from "@/constants.js";
 
 describe("Unit | Adapters | API check", () => {
@@ -174,6 +180,39 @@ describe("Unit | Adapters | API check", () => {
 
       // then
       expect(res).toBe(false);
+    });
+  });
+
+  describe("#getUserInfo", () => {
+    it("should return data", async () => {
+      // given
+      vi.spyOn(global, "fetch").mockResolvedValue({
+        status: 200,
+        json: vi.fn().mockResolvedValue({
+          data: {
+            firstname: "John",
+            lastname: "Doe",
+            email: "john@example.net",
+            userType: "admin",
+          },
+        }),
+      });
+
+      // when
+      const result = await getUserInfo("abcd");
+
+      // then
+      expect(global.fetch).toHaveBeenCalledWith("/api/user", {
+        method: "GET",
+        headers: { from: "management", Authorization: "Bearer abcd" },
+      });
+      expect(result).toEqual({
+        firstname: "John",
+        lastname: "Doe",
+        email: "john@example.net",
+        userType: "admin",
+      });
+
     });
   });
 });

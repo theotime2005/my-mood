@@ -1,5 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 
+import { getLogin } from "@/utils/storage.js";
+
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
@@ -21,6 +23,16 @@ const router = createRouter({
       },
     },
   ],
+});
+
+router.beforeEach((to) => {
+  const requiresAuth = Boolean(to.meta && to.meta.requireAuth);
+  const isAuthenticated = Boolean(getLogin());
+
+  if (requiresAuth && !isAuthenticated) {
+    return { name: "login" };
+  }
+  return true;
 });
 
 router.afterEach((to) => {
