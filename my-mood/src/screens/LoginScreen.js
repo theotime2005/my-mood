@@ -2,12 +2,14 @@ import { useState } from "react";
 import { Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
 
 import { login } from "../adapters/api-adapter.js";
+import { useUser } from "../contexts/UserContext.js";
 import { getBaseUrl, saveToken } from "../utils/storage.js";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const { refreshUser } = useUser();
 
   async function handleLogin() {
     if (!email.trim() || !password) {
@@ -21,6 +23,16 @@ export default function LoginScreen({ navigation }) {
 
     if (result.success) {
       await saveToken(result.token);
+      // After saving the token we force-refresh the user info so the app
+      // has the current user before navigating to Home. This prevents the
+      // Home screen from rendering without user data on first login.
+      try {
+        await refreshUser();
+      } catch (_err) {
+        // If refresh fails, we still navigate — the UserProvider will
+        // keep loading=false but user may be null; consider showing an
+        // error in a follow-up change if needed.
+      }
       navigation.navigate("Home");
     } else {
       Alert.alert("Erreur", result.message || "Email ou mot de passe incorrect");
