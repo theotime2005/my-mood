@@ -29,9 +29,10 @@ export default function LoginScreen({ navigation }) {
       try {
         await refreshUser();
       } catch (_err) {
-        // If refresh fails, we still navigate — the UserProvider will
-        // keep loading=false but user may be null; consider showing an
-        // error in a follow-up change if needed.
+        Alert.alert(
+          "Erreur",
+          "Impossible de charger le profil utilisateur. Veuillez réessayer."
+        );
       }
       navigation.navigate("Home");
     } else {
