@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Alert, Button, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { getMoodStatistics } from "../adapters/api-adapter.js";
 import { EMOTIONAL_STATES } from "../constants.js";
@@ -22,7 +22,7 @@ const EMOTIONAL_STATE_COLORS = {
   EXCITED: "#FF9800",
 };
 
-export default function MoodStatisticsScreen() {
+export default function MoodStatisticsScreen({ navigation }) {
   const [statistics, setStatistics] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -117,6 +117,14 @@ export default function MoodStatisticsScreen() {
           })}
         </View>
 
+        <View style={styles.backButtonContainer}>
+          <Button
+            title="Retour à l'accueil"
+            onPress={() => navigation.navigate("Home")}
+            testID="back-to-home-button"
+          />
+        </View>
+
         <StatusBar style="auto" />
       </View>
     </ScrollView>
@@ -201,6 +209,10 @@ const styles = StyleSheet.create({
   progressBar: {
     height: "100%",
     borderRadius: 4,
+  },
+  backButtonContainer: {
+    marginTop: 30,
+    marginBottom: 20,
   },
   errorText: {
     fontSize: 18,

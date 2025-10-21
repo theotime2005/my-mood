@@ -25,7 +25,7 @@ describe("Unit | HomeScreen", () => {
     jest.clearAllMocks();
   });
 
-  it("should render mood statistics button when user is manager", () => {
+  it("should render both mood entry and statistics buttons when user is manager", () => {
     // given
     UserContext.useUser.mockReturnValue({
       user: { firstname: "John", userType: "manager" },
@@ -37,6 +37,7 @@ describe("Unit | HomeScreen", () => {
 
     // then
     expect(getByText("Bienvenue John !")).toBeTruthy();
+    expect(getByTestId("mood-entry-button")).toBeTruthy();
     expect(getByTestId("mood-statistics-button")).toBeTruthy();
   });
 

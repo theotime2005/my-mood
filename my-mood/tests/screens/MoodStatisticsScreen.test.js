@@ -1,4 +1,4 @@
-import { render, waitFor } from "@testing-library/react-native";
+import { fireEvent, render, waitFor } from "@testing-library/react-native";
 import { Alert } from "react-native";
 
 import MoodStatisticsScreen from "../../src/screens/MoodStatisticsScreen.js";
@@ -20,6 +20,8 @@ jest.mock("../../src/utils/storage.js", () => ({
 jest.spyOn(Alert, "alert");
 
 describe("Unit | MoodStatisticsScreen", () => {
+  const mockNavigation = { navigate: jest.fn() };
+
   beforeEach(() => {
     jest.clearAllMocks();
     storage.getBaseUrl.mockResolvedValue("http://localhost:3000");
@@ -33,7 +35,7 @@ describe("Unit | MoodStatisticsScreen", () => {
     );
 
     // when
-    const { getByTestId } = render(<MoodStatisticsScreen />);
+    const { getByTestId } = render(<MoodStatisticsScreen navigation={mockNavigation} />);
 
     // then
     expect(getByTestId("loading-indicator")).toBeTruthy();
@@ -54,7 +56,7 @@ describe("Unit | MoodStatisticsScreen", () => {
     });
 
     // when
-    const { getByText } = render(<MoodStatisticsScreen />);
+    const { getByText } = render(<MoodStatisticsScreen navigation={mockNavigation} />);
 
     // then
     await waitFor(() => {
@@ -72,7 +74,7 @@ describe("Unit | MoodStatisticsScreen", () => {
     });
 
     // when
-    render(<MoodStatisticsScreen />);
+    render(<MoodStatisticsScreen navigation={mockNavigation} />);
 
     // then
     await waitFor(() => {
@@ -88,11 +90,39 @@ describe("Unit | MoodStatisticsScreen", () => {
     });
 
     // when
-    const { getByText } = render(<MoodStatisticsScreen />);
+    const { getByText } = render(<MoodStatisticsScreen navigation={mockNavigation} />);
 
     // then
     await waitFor(() => {
       expect(getByText("Aucune statistique disponible")).toBeTruthy();
     });
+  });
+
+  it("should navigate to Home when back button is pressed", async () => {
+    // given
+    const mockStatistics = {
+      HAPPY: { percentage: 50, averageMotivation: 8 },
+      SAD: { percentage: 25, averageMotivation: 4 },
+      ANGRY: { percentage: 10, averageMotivation: 3 },
+      RELAXED: { percentage: 10, averageMotivation: 7 },
+      EXCITED: { percentage: 5, averageMotivation: 9 },
+    };
+    apiAdapter.getMoodStatistics.mockResolvedValue({
+      success: true,
+      data: mockStatistics,
+    });
+
+    // when
+    const { getByTestId } = render(<MoodStatisticsScreen navigation={mockNavigation} />);
+
+    // then
+    await waitFor(() => {
+      expect(getByTestId("back-to-home-button")).toBeTruthy();
+    });
+
+    const backButton = getByTestId("back-to-home-button");
+    fireEvent.press(backButton)
+
+    expect(mockNavigation.navigate).toHaveBeenCalledWith("Home");
   });
 });
