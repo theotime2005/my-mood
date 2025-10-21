@@ -25,7 +25,7 @@ describe("Unit | HomeScreen", () => {
     jest.clearAllMocks();
   });
 
-  it("should render home screen with hello world text when user is not admin or employer", () => {
+  it("should render both mood entry and statistics buttons when user is manager", () => {
     // given
     UserContext.useUser.mockReturnValue({
       user: { firstname: "John", userType: "manager" },
@@ -33,10 +33,12 @@ describe("Unit | HomeScreen", () => {
     });
 
     // when
-    const { getByText } = render(<HomeScreen navigation={mockNavigation} />);
+    const { getByText, getByTestId } = render(<HomeScreen navigation={mockNavigation} />);
 
     // then
-    expect(getByText("Hello world")).toBeTruthy();
+    expect(getByText("Bienvenue John !")).toBeTruthy();
+    expect(getByTestId("mood-entry-button")).toBeTruthy();
+    expect(getByTestId("mood-statistics-button")).toBeTruthy();
   });
 
   it("should render home screen with hello world text when user is null", () => {
@@ -93,6 +95,21 @@ describe("Unit | HomeScreen", () => {
 
     // then
     expect(mockNavigation.navigate).toHaveBeenCalledWith("MoodEntry");
+  });
+
+  it("should navigate to MoodStatistics screen when statistics button is pressed", () => {
+    // given
+    UserContext.useUser.mockReturnValue({
+      user: { firstname: "Manager", userType: "manager" },
+      loading: false,
+    });
+    const { getByTestId } = render(<HomeScreen navigation={mockNavigation} />);
+
+    // when
+    fireEvent.press(getByTestId("mood-statistics-button"));
+
+    // then
+    expect(mockNavigation.navigate).toHaveBeenCalledWith("MoodStatistics");
   });
 
   it("should show loading indicator while loading", () => {
