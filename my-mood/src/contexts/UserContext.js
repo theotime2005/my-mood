@@ -31,7 +31,7 @@ export function UserProvider({ children }) {
 
       loadUserInfo();
     },
-    [], // Le tableau vide signifie que cet effet ne s'exécute qu'une seule fois après le premier rendu
+    [], // Empty array means this effect runs only once after the first render
   );
 
   async function refreshUser() {
