@@ -9,29 +9,34 @@ export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(function() {
-    async function loadUserInfo() {
-      try {
-        const baseUrl = await getBaseUrl();
-        const token = await getToken();
+  useEffect(
+    function() {
+      async function loadUserInfo() {
+        try {
+          const baseUrl = await getBaseUrl();
+          const token = await getToken();
 
-        if (baseUrl && token) {
-          const result = await getUserInfo({ baseUrl, token });
-          if (result.success) {
-            setUser(result.data);
+          if (baseUrl && token) {
+            const result = await getUserInfo({ baseUrl, token });
+            if (result.success) {
+              setUser(result.data);
+            }
           }
+        } catch (_error) {
+          // Error loading user info - user will remain null
+        } finally {
+          setLoading(false);
         }
-      } catch (_error) {
-        // Error loading user info - user will remain null
-      } finally {
-        setLoading(false);
       }
-    }
 
-    loadUserInfo();
-  }, []);
+      loadUserInfo();
+    },
+    [], // Empty array means this effect runs only once after the first render
+  );
 
   async function refreshUser() {
+    // Ensure consumers can show a loading state while we refresh
+    setLoading(true);
     try {
       const baseUrl = await getBaseUrl();
       const token = await getToken();
@@ -44,6 +49,8 @@ export function UserProvider({ children }) {
       }
     } catch (_error) {
       // Error refreshing user info
+    } finally {
+      setLoading(false);
     }
   }
 
