@@ -21,7 +21,8 @@ function logout() {
 
 onMounted(async () => {
   apiIsActive.value = await checkApiIsOk();
-  if (getLogin() && await getUserInfo(getLogin())) {
+  const token = getLogin();
+  if (token && await getUserInfo(token)) {
     router.push({ name: "users" });
   }
 });
