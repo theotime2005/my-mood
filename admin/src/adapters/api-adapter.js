@@ -90,4 +90,20 @@ async function updateUserType({ userId, token, userType }) {
   }
 }
 
-export { checkApiIsOk, getAllUsers, loginUser, updateUserType };
+async function getUserInfo(token) {
+  try {
+    const response = await fetch(`${BASE_URL}user`, {
+      method: "GET",
+      headers: getHeaders({ Authorization: `Bearer ${token}` }),
+    });
+    if (response.status === 200) {
+      const { data } = await response.json();
+      return data;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+export { checkApiIsOk, getAllUsers, getUserInfo, loginUser, updateUserType };
