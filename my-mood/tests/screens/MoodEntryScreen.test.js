@@ -20,7 +20,7 @@ storage.getBaseUrl = mockGetBaseUrl;
 storage.getToken = mockGetToken;
 
 describe("Unit | MoodEntryScreen", () => {
-  const mockNavigation = { navigate: jest.fn() };
+  const mockNavigation = { navigate: jest.fn(), goBack: jest.fn() };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -33,7 +33,7 @@ describe("Unit | MoodEntryScreen", () => {
     Alert.alert.mockRestore();
   });
 
-  it("should render mood entry screen with emotions and motivation levels", () => {
+  it("should render mood entry screen with emotions and motivation slider", () => {
     // when
     const { getByText, getByTestId } = render(<MoodEntryScreen navigation={mockNavigation} />);
 
@@ -46,7 +46,10 @@ describe("Unit | MoodEntryScreen", () => {
     expect(getByText("😌 Détendu")).toBeTruthy();
     expect(getByText("😃 Excité")).toBeTruthy();
     expect(getByText("Niveau de motivation (1-10) :")).toBeTruthy();
+    expect(getByTestId("motivation-slider")).toBeTruthy();
+    expect(getByTestId("motivation-value")).toBeTruthy();
     expect(getByTestId("save-button")).toBeTruthy();
+    expect(getByTestId("cancel-button")).toBeTruthy();
   });
 
   it("should allow selecting an emotion", () => {
@@ -61,42 +64,29 @@ describe("Unit | MoodEntryScreen", () => {
     expect(happyButton).toBeTruthy();
   });
 
-  it("should allow selecting a motivation level", () => {
+  it("should allow selecting a motivation level using slider", () => {
     // given
     const { getByTestId } = render(<MoodEntryScreen navigation={mockNavigation} />);
 
     // when
-    const motivationButton = getByTestId("motivation-8");
-    fireEvent.press(motivationButton);
+    const slider = getByTestId("motivation-slider");
+    fireEvent(slider, "valueChange", 8);
 
     // then
-    expect(motivationButton).toBeTruthy();
+    expect(slider).toBeTruthy();
+    expect(getByTestId("motivation-value")).toHaveTextContent("8");
   });
 
   it("should show error alert when trying to save without selecting emotion", async () => {
     // given
     const { getByTestId } = render(<MoodEntryScreen navigation={mockNavigation} />);
 
-    // when
+    // when - motivation has default value of 5, so only select save
     fireEvent.press(getByTestId("save-button"));
 
     // then
     await waitFor(() => {
       expect(Alert.alert).toHaveBeenCalledWith("Erreur", "Veuillez sélectionner une émotion");
-    });
-  });
-
-  it("should show error alert when trying to save without selecting motivation", async () => {
-    // given
-    const { getByTestId } = render(<MoodEntryScreen navigation={mockNavigation} />);
-
-    // when
-    fireEvent.press(getByTestId("emotion-happy"));
-    fireEvent.press(getByTestId("save-button"));
-
-    // then
-    await waitFor(() => {
-      expect(Alert.alert).toHaveBeenCalledWith("Erreur", "Veuillez sélectionner un niveau de motivation");
     });
   });
 
@@ -107,7 +97,7 @@ describe("Unit | MoodEntryScreen", () => {
 
     // when
     fireEvent.press(getByTestId("emotion-happy"));
-    fireEvent.press(getByTestId("motivation-8"));
+    fireEvent(getByTestId("motivation-slider"), "valueChange", 8);
     fireEvent.press(getByTestId("save-button"));
 
     // then
@@ -136,12 +126,48 @@ describe("Unit | MoodEntryScreen", () => {
 
     // when
     fireEvent.press(getByTestId("emotion-happy"));
-    fireEvent.press(getByTestId("motivation-8"));
+    fireEvent(getByTestId("motivation-slider"), "valueChange", 8);
     fireEvent.press(getByTestId("save-button"));
 
     // then
     await waitFor(() => {
       expect(Alert.alert).toHaveBeenCalledWith("Erreur", "Server error");
     });
+  });
+
+  it("should navigate back when cancel button is pressed", () => {
+    // given
+    const { getByTestId } = render(<MoodEntryScreen navigation={mockNavigation} />);
+
+    // when
+    fireEvent.press(getByTestId("cancel-button"));
+
+    // then
+    expect(mockNavigation.goBack).toHaveBeenCalled();
+  });
+
+  it("should have proper accessibility attributes for emotion buttons", () => {
+    // given
+    const { getByTestId } = render(<MoodEntryScreen navigation={mockNavigation} />);
+
+    // when
+    const emotionButton = getByTestId("emotion-happy");
+
+    // then
+    expect(emotionButton.props.accessible).toBe(true);
+    expect(emotionButton.props.accessibilityRole).toBe("radio");
+  });
+
+  it("should have proper accessibility attributes for motivation slider", () => {
+    // given
+    const { getByTestId } = render(<MoodEntryScreen navigation={mockNavigation} />);
+
+    // when
+    const slider = getByTestId("motivation-slider");
+
+    // then
+    expect(slider.props.accessible).toBe(true);
+    expect(slider.props.accessibilityRole).toBe("adjustable");
+    expect(slider.props.accessibilityLabel).toBe("Niveau de motivation");
   });
 });
