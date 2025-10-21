@@ -31,7 +31,7 @@ export default function LoginScreen({ navigation }) {
       } catch (_err) {
         Alert.alert(
           "Erreur",
-          "Impossible de charger le profil utilisateur. Veuillez réessayer."
+          "Impossible de charger le profil utilisateur. Veuillez réessayer.",
         );
       }
       navigation.navigate("Home");
