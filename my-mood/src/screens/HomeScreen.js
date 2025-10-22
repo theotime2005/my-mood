@@ -80,7 +80,7 @@ export default function HomeScreen({ navigation }) {
       ) : (
         <View>
           <Text style={styles.text}>Impossible de joindre le serveur. Déconnectez - vous et réessayez.</Text>
-          <Button title="Se déconnecter" onPress={() => confirmLogout(true)} testID="logout-button" />
+          <Button title="Se déconnecter" onPress={() => confirmLogout(true)} testID="error-logout-button" />
         </View>
       )}
 
