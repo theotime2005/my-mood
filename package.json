@@ -31,7 +31,8 @@
     "start-api": "cd api && npm start",
     "first-deploy": "cd api && npm run first-deploy",
     "post-deploy": "cd api && npm run db:migrate",
-    "start": "npm run build-admin && npm run start-api",
+    "start": "npm run start-api",
+    "build": "npm run build-admin",
     "update-subpackages": "sh scripts/update-versions.sh",
     "release": "semantic-release"
   },
