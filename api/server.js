@@ -1,6 +1,7 @@
 import { errors } from "celebrate";
 import cors from "cors";
 import express from "express";
+import path from "path";
 
 import { logger } from "./logger.js";
 import authenticationRoutes from "./src/identities-access-management/routes/authentication-routes.js";
@@ -14,6 +15,9 @@ const server = express();
 
 server.use(cors());
 server.use(express.json());
+
+// serve frontend
+server.use(express.static(path.join(process.cwd(), "dist")));
 
 // log requests
 server.use((req, res, next) => {

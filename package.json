@@ -27,6 +27,12 @@
     "test:my-mood": "cd my-mood && npm test",
     "test": "npm-run-all --parallel --print-label test:*",
     "configure": "sh scripts/configure.sh",
+    "build-admin": "cd admin && npm run build",
+    "start-api": "cd api && npm start",
+    "first-deploy": "cd api && npm run first-deploy",
+    "post-deploy": "cd api && npm run db:migrate",
+    "start": "npm run start-api",
+    "build": "npm run build-admin",
     "update-subpackages": "sh scripts/update-versions.sh",
     "release": "semantic-release"
   },
