@@ -49,7 +49,7 @@ describe("Unit | HomeScreen", () => {
     const { getByText } = render(<HomeScreen navigation={mockNavigation} />);
 
     // then
-    expect(getByText("Impossible de joindre le serveur. Déconnectez-vous et réessayez.")).toBeTruthy();
+    expect(getByText("Impossible de joindre le serveur. Déconnectez - vous et réessayez.")).toBeTruthy();
   });
 
   it("should render mood entry button when user is admin", () => {
