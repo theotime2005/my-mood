@@ -30,7 +30,8 @@
     "db:seed": "knex --knexfile ./db/knexfile.js seed:run",
     "db:reset": "npm run db:prepare && npm run db:seed",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "first-deploy": "npm run db:create && npm run db:migrate"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
