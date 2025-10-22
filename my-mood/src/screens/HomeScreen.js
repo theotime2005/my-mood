@@ -4,7 +4,7 @@ import { ActivityIndicator, Alert, Button, Modal, StyleSheet, Text, View } from 
 
 import { USER_TYPE } from "../constants.js";
 import { useUser } from "../contexts/UserContext.js";
-import { deleteToken } from "../utils/storage.js";
+import { deleteToken, removeBaseUrl } from "../utils/storage.js";
 
 export default function HomeScreen({ navigation }) {
   const { user, loading } = useUser();
@@ -34,15 +34,20 @@ export default function HomeScreen({ navigation }) {
         {
           text: "Déconnexion",
           style: "destructive",
-          onPress: async () => {
-            await deleteToken();
-            setShowUserMenu(false);
-            navigation.navigate("Welcome");
-          },
+          onPress: () => confirmLogout(),
         },
       ],
       { cancelable: true },
     );
+  }
+
+  async function confirmLogout(removeUrl = false) {
+    await deleteToken();
+    setShowUserMenu(false);
+    if (removeUrl) {
+      await removeBaseUrl();
+    }
+    navigation.navigate("Welcome");
   }
 
   return (
@@ -73,16 +78,21 @@ export default function HomeScreen({ navigation }) {
           />
         </View>
       ) : (
-        <Text style={styles.text}>Hello world</Text>
+        <View>
+          <Text style={styles.text}>Impossible de joindre le serveur. Déconnectez-vous et réessayez.</Text>
+          <Button title="Se déconnecter" onPress={() => confirmLogout(true)} testID="logout-button" />
+        </View>
       )}
 
-      <View style={styles.userMenuButtonContainer}>
-        <Button
-          title="Menu utilisateur"
-          onPress={() => setShowUserMenu(true)}
-          testID="user-menu-button"
-        />
-      </View>
+      {user && (
+        <View style={styles.userMenuButtonContainer}>
+          <Button
+            title="Menu utilisateur"
+            onPress={() => setShowUserMenu(true)}
+            testID="user-menu-button"
+          />
+        </View>
+      )}
 
       <Modal
         visible={showUserMenu}

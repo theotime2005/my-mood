@@ -41,7 +41,7 @@ describe("Unit | HomeScreen", () => {
     expect(getByTestId("mood-statistics-button")).toBeTruthy();
   });
 
-  it("should render home screen with hello world text when user is null", () => {
+  it("should render home screen with server error text when user is null", () => {
     // given
     UserContext.useUser.mockReturnValue({ user: null, loading: false });
 
@@ -49,7 +49,7 @@ describe("Unit | HomeScreen", () => {
     const { getByText } = render(<HomeScreen navigation={mockNavigation} />);
 
     // then
-    expect(getByText("Hello world")).toBeTruthy();
+    expect(getByText("Impossible de joindre le serveur. Déconnectez-vous et réessayez.")).toBeTruthy();
   });
 
   it("should render mood entry button when user is admin", () => {
