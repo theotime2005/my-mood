@@ -19,6 +19,10 @@ async function getBaseUrl() {
   return await SecureStore.getItemAsync(BASE_URL_KEY);
 }
 
+async function removeBaseUrl() {
+  await SecureStore.deleteItemAsync(BASE_URL_KEY);
+}
+
 /**
  * Saves the authentication token
  * @param {string} token - Authentication token
@@ -42,4 +46,4 @@ async function deleteToken() {
   await SecureStore.deleteItemAsync(TOKEN_KEY);
 }
 
-export { deleteToken, getBaseUrl, getToken, saveBaseUrl, saveToken };
+export { deleteToken, getBaseUrl, getToken, removeBaseUrl, saveBaseUrl, saveToken };
