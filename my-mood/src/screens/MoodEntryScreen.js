@@ -1,3 +1,4 @@
+import Slider from "@react-native-community/slider";
 import { useState } from "react";
 import { Alert, Button, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
@@ -13,12 +14,14 @@ const EMOTION_LABELS = {
   [EMOTIONAL_STATES.EXCITED]: "😃 Excité",
 };
 
-const MOTIVATION_LEVELS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
 export default function MoodEntryScreen({ navigation }) {
   const [selectedEmotion, setSelectedEmotion] = useState(null);
-  const [selectedMotivation, setSelectedMotivation] = useState(null);
+  const [selectedMotivation, setSelectedMotivation] = useState(5);
   const [loading, setLoading] = useState(false);
+
+  function handleCancel() {
+    navigation.goBack();
+  }
 
   async function handleSave() {
     if (!selectedEmotion) {
@@ -26,7 +29,7 @@ export default function MoodEntryScreen({ navigation }) {
       return;
     }
 
-    if (!selectedMotivation) {
+    if (selectedMotivation === null || selectedMotivation === undefined) {
       Alert.alert("Erreur", "Veuillez sélectionner un niveau de motivation");
       return;
     }
@@ -68,6 +71,11 @@ export default function MoodEntryScreen({ navigation }) {
             ]}
             onPress={() => setSelectedEmotion(value)}
             testID={`emotion-${value}`}
+            accessible={true}
+            accessibilityRole="radio"
+            accessibilityState={{ checked: selectedEmotion === value, selected: selectedEmotion === value }}
+            accessibilityLabel={`Émotion ${EMOTION_LABELS[value]}`}
+            accessibilityHint={selectedEmotion === value ? "Sélectionné" : "Appuyez pour sélectionner"}
           >
             <Text
               style={[
@@ -83,27 +91,36 @@ export default function MoodEntryScreen({ navigation }) {
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Niveau de motivation (1-10) :</Text>
-        <View style={styles.motivationGrid}>
-          {MOTIVATION_LEVELS.map((level) => (
-            <TouchableOpacity
-              key={level}
-              style={[
-                styles.motivationButton,
-                selectedMotivation === level && styles.motivationButtonSelected,
-              ]}
-              onPress={() => setSelectedMotivation(level)}
-              testID={`motivation-${level}`}
-            >
-              <Text
-                style={[
-                  styles.motivationText,
-                  selectedMotivation === level && styles.motivationTextSelected,
-                ]}
-              >
-                {level}
-              </Text>
-            </TouchableOpacity>
-          ))}
+        <View style={styles.motivationSliderContainer}>
+          <Text style={styles.motivationValue} testID="motivation-value">
+            {Math.round(selectedMotivation)}
+          </Text>
+          <Slider
+            style={styles.slider}
+            minimumValue={1}
+            maximumValue={10}
+            step={1}
+            value={selectedMotivation}
+            onValueChange={setSelectedMotivation}
+            minimumTrackTintColor="#2196F3"
+            maximumTrackTintColor="#d3d3d3"
+            thumbTintColor="#2196F3"
+            testID="motivation-slider"
+            accessible={true}
+            accessibilityRole="adjustable"
+            accessibilityLabel="Niveau de motivation"
+            accessibilityValue={{
+              min: 1,
+              max: 10,
+              now: Math.round(selectedMotivation),
+              text: `Niveau de motivation ${Math.round(selectedMotivation)} sur 10`,
+            }}
+            accessibilityHint="Faites glisser pour ajuster le niveau de motivation de 1 à 10"
+          />
+          <View style={styles.motivationLabels}>
+            <Text style={styles.motivationLabelText}>1</Text>
+            <Text style={styles.motivationLabelText}>10</Text>
+          </View>
         </View>
       </View>
 
@@ -113,6 +130,16 @@ export default function MoodEntryScreen({ navigation }) {
           onPress={handleSave}
           disabled={loading}
           testID="save-button"
+        />
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <Button
+          title="Annuler"
+          onPress={handleCancel}
+          disabled={loading}
+          color="#888"
+          testID="cancel-button"
         />
       </View>
     </ScrollView>
@@ -165,37 +192,31 @@ const styles = StyleSheet.create({
     color: "#2196F3",
     fontWeight: "bold",
   },
-  motivationGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
+  motivationSliderContainer: {
+    paddingHorizontal: 10,
   },
-  motivationButton: {
-    width: "18%",
-    aspectRatio: 1,
-    backgroundColor: "#f0f0f0",
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 10,
-    borderWidth: 2,
-    borderColor: "#f0f0f0",
+  slider: {
+    width: "100%",
+    height: 40,
   },
-  motivationButtonSelected: {
-    backgroundColor: "#e3f2fd",
-    borderColor: "#2196F3",
-  },
-  motivationText: {
-    fontSize: 16,
-    color: "#333",
-    fontWeight: "600",
-  },
-  motivationTextSelected: {
-    color: "#2196F3",
+  motivationValue: {
+    fontSize: 32,
     fontWeight: "bold",
+    color: "#2196F3",
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  motivationLabels: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+  },
+  motivationLabelText: {
+    fontSize: 14,
+    color: "#666",
   },
   buttonContainer: {
-    marginTop: 20,
-    marginBottom: 40,
+    marginTop: 10,
+    marginBottom: 10,
   },
 });
