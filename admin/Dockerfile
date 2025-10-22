@@ -6,14 +6,14 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
+# Install all dependencies (including devDependencies needed for build)
 RUN npm ci
 
 # Copy application source
 COPY . .
 
 # Build the application directly to dist folder for Docker
-RUN npm run build -- --outDir ./dist
+RUN npx vite build --outDir ./dist
 
 # Production stage - use nginx to serve static files
 FROM nginx:alpine
