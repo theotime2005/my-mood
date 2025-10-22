@@ -1,3 +1,9 @@
+## [1.2.2](https://github.com/theotime2005/my-mood/compare/v1.2.1...v1.2.2) (2025-10-22)
+
+### Technical
+
+* serve the front by the api ([#33](https://github.com/theotime2005/my-mood/issues/33)) ([3467efa](https://github.com/theotime2005/my-mood/commit/3467efadd39e0f318ed107892d6bf1d08676b630))
+
 ## [1.2.1](https://github.com/theotime2005/my-mood/compare/v1.2.0...v1.2.1) (2025-10-22)
 
 ### Bug Fixes
