@@ -44,13 +44,20 @@ This project was created in 2025 as an educational project to help companies bui
 
 ### Using Docker (Recommended)
 
-The fastest way to get started:
+The fastest way to get started using our automated script:
 
 ```bash
 # Clone the repository
 git clone https://github.com/theotime2005/my-mood.git
 cd my-mood
 
+# Run the deployment script
+./scripts/docker-deploy.sh
+```
+
+Or manually with Docker Compose:
+
+```bash
 # Copy environment files
 cp api/sample.env api/.env
 cp admin/sample.env admin/.env

@@ -12,8 +12,8 @@ RUN npm ci
 # Copy application source
 COPY . .
 
-# Build the application
-RUN npm run build
+# Build the application directly to dist folder for Docker
+RUN npm run build -- --outDir ./dist
 
 # Production stage - use nginx to serve static files
 FROM nginx:alpine
@@ -21,8 +21,8 @@ FROM nginx:alpine
 # Copy built assets from builder
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Copy custom nginx configuration if needed
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy custom nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port
 EXPOSE 80

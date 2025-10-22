@@ -27,6 +27,7 @@
     "test:my-mood": "cd my-mood && npm test",
     "test": "npm-run-all --parallel --print-label test:*",
     "configure": "sh scripts/configure.sh",
+    "docker:deploy": "sh scripts/docker-deploy.sh",
     "build-admin": "cd admin && npm run build",
     "start-api": "cd api && npm start",
     "first-deploy": "cd api && npm run first-deploy",
