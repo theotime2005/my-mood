@@ -16,7 +16,7 @@ const server = express();
 server.use(cors());
 server.use(express.json());
 
-// serve front
+// serve frontend
 server.use(express.static(path.join(process.cwd(), "dist")));
 
 // log requests
