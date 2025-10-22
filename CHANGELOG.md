@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/theotime2005/my-mood/compare/v1.2.0...v1.2.1) (2025-10-22)
+
+### Bug Fixes
+
+* add a button to log out when server connexion failed ([#32](https://github.com/theotime2005/my-mood/issues/32)) ([46cf68b](https://github.com/theotime2005/my-mood/commit/46cf68bfa617501dcd7ff7c96c9a635c700bf2df))
+* add accessibility features to mood entry screen ([#31](https://github.com/theotime2005/my-mood/issues/31)) ([7518ca2](https://github.com/theotime2005/my-mood/commit/7518ca235232c7f1ab2b0e1d7c4711089c7ef9ba))
+
 ## [1.2.0](https://github.com/theotime2005/my-mood/compare/v1.1.0...v1.2.0) (2025-10-21)
 
 ### Features
