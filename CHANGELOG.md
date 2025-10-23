@@ -1,3 +1,9 @@
+## [1.2.3](https://github.com/theotime2005/my-mood/compare/v1.2.2...v1.2.3) (2025-10-23)
+
+### Technical
+
+* use github semantic-release ([#36](https://github.com/theotime2005/my-mood/issues/36)) ([e0e5193](https://github.com/theotime2005/my-mood/commit/e0e5193dba26e78bd79a2c83f791719d72237947))
+
 ## [1.2.2](https://github.com/theotime2005/my-mood/compare/v1.2.1...v1.2.2) (2025-10-22)
 
 ### Technical
