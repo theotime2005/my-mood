@@ -1,3 +1,9 @@
+## [1.2.5](https://github.com/theotime2005/my-mood/compare/v1.2.4...v1.2.5) (2025-10-23)
+
+### Documentation
+
+* update readme ([#38](https://github.com/theotime2005/my-mood/issues/38)) ([eff9b95](https://github.com/theotime2005/my-mood/commit/eff9b95a358f8d13b25037cf6ac5faf4ee1f34f0))
+
 ## [1.2.4](https://github.com/theotime2005/my-mood/compare/v1.2.3...v1.2.4) (2025-10-23)
 
 ### Bug Fixes
