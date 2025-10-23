@@ -34,16 +34,9 @@
     "start": "npm run start-api",
     "build": "npm run build-admin",
     "update-subpackages": "sh scripts/update-versions.sh",
-    "release": "semantic-release"
+    "release": "echo \"Releases are handled by GitHub Actions (see .github/workflows/release.yml)\""
   },
   "dependencies": {
     "npm-run-all": "^4.1.5"
-  },
-  "devDependencies": {
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/exec": "^7.1.0",
-    "@semantic-release/git": "^10.0.1",
-    "conventional-changelog-conventionalcommits": "^9.1.0",
-    "semantic-release": "^24.2.9"
   }
 }
