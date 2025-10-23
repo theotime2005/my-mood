@@ -1,4 +1,4 @@
-name: Release
+name: release
 
 on:
   workflow_dispatch:
@@ -29,11 +29,14 @@ jobs:
         with:
           node-version-file: .nvmrc
 
-      - name: Release (via official GitHub Action)
-        # Using the semantic-release GitHub Action so semantic-release doesn't have to be a repo dependency.
-        # This action runs semantic-release server-side and accepts the GITHUB_TOKEN. It also supports a dry-run input.
-        uses: semantic-release/[email protected]
-        with:
-          dry-run: ${{ inputs.dry-run }}
+      - name: Release with semantic-release
+        uses: cycjimmy/semantic-release-action@v4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          dry_run: ${{ github.event.inputs['dry-run'] }}
+          extra_plugins: |
+            @semantic-release/exec
+            @semantic-release/changelog
+            @semantic-release/git
+            conventional-changelog-conventionalcommits
