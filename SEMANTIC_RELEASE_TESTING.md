@@ -11,20 +11,30 @@ The custom commit types are configured in `.releaserc.json` in two places:
 
 ## Verifying the Configuration
 
-### Option 1: Check Configuration Syntax
+> Note: Releases are now executed by the official GitHub Action (`semantic-release/action`). The repository no longer needs `semantic-release` in its dependencies.
 
-Run the validation script:
+### Option 1: Workflow dry-run (recommended)
+
+Use the GitHub Actions UI to trigger the `Release` workflow manually and set the `dry-run` input to `true`.
+
+1. Go to the Actions tab → select the `Release` workflow → "Run workflow".
+2. Set `dry-run` to `true` and run the workflow.
+3. Inspect the workflow logs — the action will run semantic-release in dry-run mode and print the analysis and generated release notes. This verifies that:
+   - The configuration file is valid JSON
+   - Plugins load correctly
+   - Custom commit types are recognized
+
+### Option 2: Local validation (optional)
+
+If you want to validate locally (requires `semantic-release` installed locally), run the validation script:
 
 ```bash
 npm run release -- --dry-run
 ```
 
-This will verify that:
-- The configuration file is valid JSON
-- All plugins load correctly
-- The custom types are recognized
+This will verify the same things listed above.
 
-### Option 2: Test with Sample Commits
+### Option 3: Test with Sample Commits
 
 1. Create commits with different types:
    ```bash
@@ -34,12 +44,9 @@ This will verify that:
    git commit -m "docs: update documentation"
    ```
 
-2. Run semantic-release in dry-run mode:
-   ```bash
-   npm run release -- --dry-run
-   ```
+2. Trigger the `Release` workflow in the GitHub Actions UI with `dry-run=true`.
 
-3. Check the generated CHANGELOG.md to see if all types appear correctly
+3. Check the generated `CHANGELOG.md` in the workflow log or after a non-dry run to see if all types appear correctly.
 
 ## Expected Behavior
 
@@ -62,14 +69,16 @@ This will verify that:
 
 If types are not recognized:
 
-1. Verify that `conventional-changelog-conventionalcommits` is installed:
-   ```bash
-   npm list conventional-changelog-conventionalcommits
-   ```
-
-2. Check that the `.releaserc.json` file is valid JSON:
+1. Verify that the `.releaserc.json` file is valid JSON:
    ```bash
    cat .releaserc.json | python3 -m json.tool
    ```
 
-3. Review the semantic-release logs for any error messages
+2. Review the GitHub Actions run logs for any error messages when using the `Release` workflow.
+
+3. If you must run locally, ensure `conventional-changelog-conventionalcommits` is installed locally:
+   ```bash
+   npm list conventional-changelog-conventionalcommits || echo "install it in the package where you run semantic-release"
+   ```
+
+4. Review the semantic-release logs for any error messages

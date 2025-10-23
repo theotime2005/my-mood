@@ -29,17 +29,11 @@ jobs:
         with:
           node-version-file: .nvmrc
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Release (dry-run)
-        if: ${{ inputs.dry-run }}
+      - name: Release (via official GitHub Action)
+        # Using the semantic-release GitHub Action so semantic-release doesn't have to be a repo dependency.
+        # This action runs semantic-release server-side and accepts the GITHUB_TOKEN. It also supports a dry-run input.
+        uses: semantic-release/[email protected]
+        with:
+          dry-run: ${{ inputs.dry-run }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release --dry-run
-
-      - name: Release
-        if: ${{ !inputs.dry-run }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release
