@@ -58,6 +58,18 @@ The resources are free, and you can fork and adapt the project for your personal
 
 ---
 
+## Database and seeds
+Some seeds are built in the project. When you run the configuration script, seeds will be executed. Seeds include an admin user, an employer user, a manager user and a user that must change his password.
+User emails have this template:
+```
+user.<userType>@example.net
+```
+For example, to login with the admin user on the admin app, the email is
+```
+user.admin@example.net
+```
+For seeds, the default password is "mymood123". You can find seeds in [the seed folder](./api/db/seeds)
+
 ## Version Management
 
 This project uses [semantic-release](https://github.com/semantic-release/semantic-release) for automated version management. See [VERSIONING.md](./VERSIONING.md) for more information on how to create releases and the versioning strategy.
